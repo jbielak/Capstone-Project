@@ -12,7 +12,10 @@ import java.util.Arrays;
 
 public class HomeActivity extends AppCompatActivity {
 
+    public static final String ANONYMOUS = "anonymous";
     private static final int RC_SIGN_IN = 1;
+
+    private String mUsername;
 
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
@@ -22,6 +25,8 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        mUsername = ANONYMOUS;
+
         mFirebaseAuth = FirebaseAuth.getInstance();
 
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
@@ -29,8 +34,9 @@ public class HomeActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
-                    //user signed in
+                    onSignedInInitialize(user.getDisplayName());
                 } else {
+                    onSignedOutCleanup();
                     startActivityForResult(
                             AuthUI.getInstance()
                                     .createSignInIntentBuilder()
@@ -57,4 +63,11 @@ public class HomeActivity extends AppCompatActivity {
         mFirebaseAuth.addAuthStateListener(mAuthStateListener);
     }
 
+    private void onSignedInInitialize(String username) {
+        mUsername = username;
+    }
+
+    private void onSignedOutCleanup() {
+        mUsername = ANONYMOUS;
+    }
 }
