@@ -1,5 +1,6 @@
 package com.jbielak.wordsguide;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -17,5 +18,7 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_sign)
     protected void signIn(){
+        Intent homeActivityIntent = new Intent(this, HomeActivity.class);
+        startActivity(homeActivityIntent);
     }
 }
