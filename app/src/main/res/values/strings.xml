@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Words Guide</string>
+
+    <string name="app_startup_info">
+        Welcome to Words Guide!\n
+        Sign In and discover magnificent world of the lyrics.
+    </string>
+    <string name="btn_sign_in_via_email">Sign in</string>
+
 </resources>
