@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
@@ -13,6 +14,8 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.Arrays;
 
 public class HomeActivity extends AppCompatActivity {
+
+    private static final String TAG = AppCompatActivity.class.getSimpleName();
 
     public static final String ANONYMOUS = "anonymous";
     private static final int RC_SIGN_IN = 1;
@@ -59,10 +62,11 @@ public class HomeActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RC_SIGN_IN) {
             if (resultCode == RESULT_OK) {
-                //TODO: log success
+
             } else if (resultCode == RESULT_CANCELED) {
                 finish();
             }
+            Log.d(TAG, "Activity result:" + resultCode);
         }
     }
 
@@ -81,10 +85,12 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void onSignedInInitialize(String username) {
+        Log.d(TAG, "Signing in initialized for user:" + username);
         mUsername = username;
     }
 
     private void onSignedOutCleanup() {
+        Log.d(TAG, "Signing out cleanup.");
         mUsername = ANONYMOUS;
     }
 }
