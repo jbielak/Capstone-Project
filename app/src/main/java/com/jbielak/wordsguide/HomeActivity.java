@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
@@ -80,6 +81,17 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.sign_out:
+                AuthUI.getInstance().signOut(getApplicationContext());
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
         if (mAuthStateListener != null) {
@@ -91,6 +103,12 @@ public class HomeActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         mFirebaseAuth.addAuthStateListener(mAuthStateListener);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        AuthUI.getInstance().signOut(getApplicationContext());
     }
 
     private void onSignedInInitialize(String username) {
