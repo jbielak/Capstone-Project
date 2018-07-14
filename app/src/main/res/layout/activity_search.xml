@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SearchActivity">
+
+    <EditText
+        android:id="@+id/et_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/edit_text_search_margin"
+        android:layout_marginStart="@dimen/edit_text_search_margin"
+        android:layout_marginTop="@dimen/edit_text_search_margin"
+        android:hint="@string/edit_text_hint"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/btn_search_text"
+        android:drawableLeft="@drawable/ic_search_black_24dp"
+        android:text="@string/btn_search_text"
+        app:layout_constraintRight_toRightOf="@id/et_search"
+        app:layout_constraintTop_toBottomOf="@id/et_search" />
+
+</android.support.constraint.ConstraintLayout>

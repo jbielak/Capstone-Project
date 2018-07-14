@@ -13,4 +13,9 @@
     <string name="btn_charts">Charts</string>
     <string name="btn_favorites">Favorites</string>
 
+    <!-- Search Activity -->
+    <string name="search_activity_label">Search</string>
+    <string name="edit_text_hint">Type song title</string>
+    <string name="btn_search_text">Search</string>
+
 </resources>

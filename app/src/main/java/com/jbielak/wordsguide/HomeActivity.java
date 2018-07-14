@@ -16,6 +16,9 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Arrays;
 
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class HomeActivity extends AppCompatActivity {
 
     private static final String TAG = AppCompatActivity.class.getSimpleName();
@@ -32,6 +35,7 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        ButterKnife.bind(this);
 
         mUsername = ANONYMOUS;
 
@@ -97,6 +101,13 @@ public class HomeActivity extends AppCompatActivity {
         if (mAuthStateListener != null) {
             mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
         }
+    }
+
+    @OnClick(R.id.btn_search_song)
+    protected void searchSong() {
+        Intent searchIntent = new Intent(this, SearchActivity.class);
+        startActivity(searchIntent);
+
     }
 
     @Override
