@@ -6,4 +6,63 @@
     android:layout_height="match_parent"
     tools:context=".HomeActivity">
 
+    <TextView
+        android:id="@+id/tv_home_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/app_home_text"
+        android:textSize="@dimen/app_home_text_size"
+        android:layout_gravity="center"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="@dimen/app_home_text_margin_top"
+        android:layout_marginBottom="@dimen/app_home_text_margin_bottom"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="@id/tv_home_text">
+
+        <Button
+            android:id="@+id/btn_search_song"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/btn_margin_general"
+            android:contentDescription="@string/btn_search_song"
+            android:drawablePadding="@dimen/btn_drawable_padding"
+            android:drawableStart="@drawable/ic_search_black_24dp"
+            android:minHeight="@dimen/btn_min_height"
+            android:minWidth="@dimen/btn_min_width"
+            android:text="@string/btn_search_song"
+            android:textSize="@dimen/btn_text_size" />
+
+        <Button
+            android:id="@+id/btn_charts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/btn_margin_general"
+            android:contentDescription="@string/btn_charts"
+            android:drawablePadding="@dimen/btn_drawable_padding"
+            android:drawableStart="@drawable/ic_show_chart_black_24dp"
+            android:minWidth="@dimen/btn_min_width"
+            android:minHeight="@dimen/btn_min_height"
+            android:text="@string/btn_charts"
+            android:textSize="@dimen/btn_text_size" />
+
+        <Button
+            android:id="@+id/btn_favorites"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/btn_favorites"
+            android:drawablePadding="@dimen/btn_drawable_padding"
+            android:drawableStart="@drawable/ic_favorite_black_24dp"
+            android:minWidth="@dimen/btn_min_width"
+            android:minHeight="@dimen/btn_min_height"
+            android:text="@string/btn_favorites"
+            android:textSize="@dimen/btn_text_size" />
+
+    </LinearLayout>
+
 </android.support.constraint.ConstraintLayout>
