@@ -15,7 +15,8 @@
 
     <!-- Search Activity -->
     <string name="search_activity_label">Search</string>
-    <string name="edit_text_hint">Type song title</string>
+    <string name="edit_text_track_hint">Type song title</string>
+    <string name="edit_text_artist_hint">Type artist</string>
     <string name="btn_search_text">Search</string>
 
     <!-- General -->

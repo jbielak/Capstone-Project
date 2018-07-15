@@ -7,14 +7,32 @@
     tools:context=".SearchActivity">
 
     <EditText
-        android:id="@+id/et_search"
+        android:id="@+id/et_search_track"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/edit_text_search_margin"
         android:layout_marginStart="@dimen/edit_text_search_margin"
         android:layout_marginTop="@dimen/edit_text_search_margin"
-        android:hint="@string/edit_text_hint"
+        android:hint="@string/edit_text_track_hint"
+        android:lines="1"
+        android:maxLines="1"
+        android:singleLine="true"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/et_search_artist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/edit_text_search_margin"
+        android:layout_marginStart="@dimen/edit_text_search_margin"
+        android:layout_marginTop="@dimen/edit_text_search_margin"
+        android:hint="@string/edit_text_artist_hint"
+        android:lines="1"
+        android:maxLines="1"
+        android:singleLine="true"
+        app:layout_constraintStart_toEndOf="@id/et_search_track"
+        app:layout_constraintTop_toBottomOf="@id/et_search_track" />
 
     <Button
         android:id="@+id/btn_search"
@@ -23,7 +41,7 @@
         android:contentDescription="@string/btn_search_text"
         android:drawableLeft="@drawable/ic_search_black_24dp"
         android:text="@string/btn_search_text"
-        app:layout_constraintRight_toRightOf="@id/et_search"
-        app:layout_constraintTop_toBottomOf="@id/et_search" />
+        app:layout_constraintEnd_toEndOf="@id/et_search_artist"
+        app:layout_constraintTop_toBottomOf="@id/et_search_artist" />
 
 </android.support.constraint.ConstraintLayout>
