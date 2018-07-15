@@ -3,6 +3,7 @@ package com.jbielak.wordsguide;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.jbielak.wordsguide.model.TrackSearchResponse;
 import com.jbielak.wordsguide.network.MusixmatchApiUtils;
@@ -25,8 +26,13 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search);
         ButterKnife.bind(this);
 
-        mService = MusixmatchApiUtils.getMusixmatchService();
-        findTrack("Redbone", null);
+        if (MusixmatchApiUtils.isOnline(this)) {
+            mService = MusixmatchApiUtils.getMusixmatchService();
+            findTrack("Redbone", null);
+        } else {
+            Toast.makeText(this, getString(R.string.app_offline),
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
 

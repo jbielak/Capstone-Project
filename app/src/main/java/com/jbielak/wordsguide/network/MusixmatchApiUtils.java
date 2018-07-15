@@ -1,8 +1,15 @@
 package com.jbielak.wordsguide.network;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.util.Log;
+
 import com.jbielak.wordsguide.BuildConfig;
 
 public abstract class MusixmatchApiUtils {
+
+    private static final String TAG = MusixmatchApiUtils.class.getSimpleName();
 
     private static final String BASE_URL = "https://api.musixmatch.com/ws/1.1/";
 
@@ -24,4 +31,14 @@ public abstract class MusixmatchApiUtils {
         return RetrofitClient.getClient(BASE_URL).create(MusixmatchService.class);
     }
 
+    public static boolean isOnline(Context context) {
+        ConnectivityManager cm =
+                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        boolean isOnline = netInfo != null && netInfo.isConnectedOrConnecting();
+
+        Log.i(TAG, "Connection provided: " + isOnline);
+
+        return isOnline;
+    }
 }

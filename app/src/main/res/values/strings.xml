@@ -18,4 +18,7 @@
     <string name="edit_text_hint">Type song title</string>
     <string name="btn_search_text">Search</string>
 
+    <!-- General -->
+    <string name="app_offline">You are offline.</string>
+
 </resources>
