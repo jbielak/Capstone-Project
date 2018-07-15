@@ -6,13 +6,14 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 public class TrackSearchResponse implements Parcelable {
 
     @SerializedName("message")
     @Expose
     private Message message;
     public final static Parcelable.Creator<TrackSearchResponse> CREATOR = new Creator<TrackSearchResponse>() {
-
 
         @SuppressWarnings({
                 "unchecked"
@@ -48,5 +49,10 @@ public class TrackSearchResponse implements Parcelable {
 
     public int describeContents() {
         return 0;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this).append("message", message).toString();
     }
 }

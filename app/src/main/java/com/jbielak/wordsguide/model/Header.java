@@ -6,6 +6,8 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 public class Header implements Parcelable {
 
 
@@ -19,7 +21,6 @@ public class Header implements Parcelable {
     @Expose
     private Integer available;
     public final static Parcelable.Creator<Header> CREATOR = new Creator<Header>() {
-
 
         @SuppressWarnings({
                 "unchecked"
@@ -76,4 +77,14 @@ public class Header implements Parcelable {
     public int describeContents() {
         return 0;
     }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("statusCode", statusCode)
+                .append("executeTime", executeTime)
+                .append("available", available)
+                .toString();
+    }
+
 }

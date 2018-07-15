@@ -6,6 +6,8 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import java.util.List;
 
 public class Body {
@@ -14,7 +16,6 @@ public class Body {
     @Expose
     private List<TrackList> trackList = null;
     public final static Parcelable.Creator<Body> CREATOR = new Parcelable.Creator<Body>() {
-
 
         @SuppressWarnings({
                 "unchecked"
@@ -27,8 +28,7 @@ public class Body {
             return (new Body[size]);
         }
 
-    }
-            ;
+    };
 
     protected Body(Parcel in) {
         in.readList(this.trackList, (TrackList.class.getClassLoader()));
@@ -51,5 +51,12 @@ public class Body {
 
     public int describeContents() {
         return 0;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("trackList", trackList)
+                .toString();
     }
 }

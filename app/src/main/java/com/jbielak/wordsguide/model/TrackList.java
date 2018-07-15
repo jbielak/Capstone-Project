@@ -6,13 +6,14 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 public class TrackList implements Parcelable {
 
     @SerializedName("track")
     @Expose
     private Track track;
     public final static Parcelable.Creator<TrackList> CREATOR = new Creator<TrackList>() {
-
 
         @SuppressWarnings({
                 "unchecked"
@@ -25,8 +26,7 @@ public class TrackList implements Parcelable {
             return (new TrackList[size]);
         }
 
-    }
-            ;
+    };
 
     protected TrackList(Parcel in) {
         this.track = ((Track) in.readValue((Track.class.getClassLoader())));
@@ -49,6 +49,13 @@ public class TrackList implements Parcelable {
 
     public int describeContents() {
         return 0;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("track", track)
+                .toString();
     }
 
 }

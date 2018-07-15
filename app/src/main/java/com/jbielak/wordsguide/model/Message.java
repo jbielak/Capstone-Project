@@ -6,6 +6,8 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 public class Message implements Parcelable {
 
     @SerializedName("header")
@@ -15,7 +17,6 @@ public class Message implements Parcelable {
     @Expose
     private Body body;
     public final static Parcelable.Creator<Message> CREATOR = new Creator<Message>() {
-
 
         @SuppressWarnings({
                 "unchecked"
@@ -61,5 +62,13 @@ public class Message implements Parcelable {
 
     public int describeContents() {
         return 0;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("header", header)
+                .append("body", body)
+                .toString();
     }
 }

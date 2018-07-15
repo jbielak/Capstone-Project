@@ -6,6 +6,8 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 public class Track implements Parcelable {
 
     @SerializedName("track_id")
@@ -101,7 +103,6 @@ public class Track implements Parcelable {
 
     public final static Parcelable.Creator<Track> CREATOR = new Creator<Track>() {
 
-
         @SuppressWarnings({
                 "unchecked"
         })
@@ -113,8 +114,7 @@ public class Track implements Parcelable {
             return (new Track[size]);
         }
 
-    }
-            ;
+    };
 
     protected Track(Parcel in) {
         this.trackId = ((Integer) in.readValue((Integer.class.getClassLoader())));
@@ -427,5 +427,41 @@ public class Track implements Parcelable {
 
     public int describeContents() {
         return 0;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("trackId", trackId)
+                .append("trackMbid", trackMbid)
+                .append("trackName", trackName)
+                .append("trackRating", trackRating)
+                .append("trackLength", trackLength)
+                .append("commontrackId", commontrackId)
+                .append("instrumental", instrumental)
+                .append("explicit", explicit)
+                .append("hasLyrics", hasLyrics)
+                .append("hasLyricsCrowd", hasLyricsCrowd)
+                .append("hasSubtitles", hasSubtitles)
+                .append("hasRichsync", hasRichsync)
+                .append("numFavourite", numFavourite)
+                .append("lyricsId", lyricsId)
+                .append("subtitleId", subtitleId)
+                .append("albumId", albumId)
+                .append("albumName", albumName)
+                .append("artistId", artistId)
+                .append("artistMbid", artistMbid)
+                .append("artistName", artistName)
+                .append("albumCoverart100x100", albumCoverart100x100)
+                .append("albumCoverart350x350", albumCoverart350x350)
+                .append("albumCoverart500x500", albumCoverart500x500)
+                .append("albumCoverart800x800", albumCoverart800x800)
+                .append("trackShareUrl", trackShareUrl)
+                .append("trackEditUrl", trackEditUrl)
+                .append("commontrackVanityId", commontrackVanityId)
+                .append("restricted", restricted)
+                .append("firstReleaseDate", firstReleaseDate)
+                .append("updatedTime", updatedTime)
+                .toString();
     }
 }
