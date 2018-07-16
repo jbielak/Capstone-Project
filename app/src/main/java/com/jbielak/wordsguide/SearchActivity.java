@@ -3,13 +3,16 @@ package com.jbielak.wordsguide;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.jbielak.wordsguide.model.TrackSearchResponse;
 import com.jbielak.wordsguide.network.MusixmatchApiUtils;
 import com.jbielak.wordsguide.network.MusixmatchService;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -17,6 +20,12 @@ import retrofit2.Response;
 public class SearchActivity extends AppCompatActivity {
 
     private static final String TAG = SearchActivity.class.getSimpleName();
+
+    @BindView(R.id.et_search_track)
+    protected EditText mTrack;
+
+    @BindView(R.id.et_search_artist)
+    protected EditText mArtist;
 
     private MusixmatchService mService;
 
@@ -26,17 +35,30 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search);
         ButterKnife.bind(this);
 
-        if (MusixmatchApiUtils.isOnline(this)) {
-            mService = MusixmatchApiUtils.getMusixmatchService();
-            findTrack("Redbone", null);
-        } else {
+        mService = MusixmatchApiUtils.getMusixmatchService();
+
+        if (!MusixmatchApiUtils.isOnline(this)) {
             Toast.makeText(this, getString(R.string.app_offline),
                     Toast.LENGTH_SHORT).show();
         }
     }
 
+    @OnClick(R.id.btn_search)
+    protected void searchTrack() {
+        if (mTrack.getText() == null || mTrack.getText().toString().isEmpty()) {
+            Toast.makeText(this, getString(R.string.no_track_specified), Toast.LENGTH_SHORT)
+                    .show();
+        } else {
+            String track = mTrack.getText().toString();
+            boolean isArtistNullOrEmpty =  mArtist.getText() == null
+                    || mArtist.getText().toString().isEmpty();
+            String artist = isArtistNullOrEmpty ? null : mArtist.getText().toString();
+            findTrack(track, artist);
+        }
 
-    public void findTrack(String track, String artist) {
+    }
+
+    private void findTrack(String track, String artist) {
         mService.getTracks(MusixmatchApiUtils.API_KEY_VALUE, track, artist,
                 MusixmatchApiUtils.HAS_LYRICS_VALUE_DEFAULT,
                 MusixmatchApiUtils.SORT_BY_TRACK_RATING_VALUE_DEFAULT,

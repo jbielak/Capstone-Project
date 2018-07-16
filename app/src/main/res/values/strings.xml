@@ -18,6 +18,7 @@
     <string name="edit_text_track_hint">Type song title</string>
     <string name="edit_text_artist_hint">Type artist</string>
     <string name="btn_search_text">Search</string>
+    <string name="no_track_specified">Type song title!</string>
 
     <!-- General -->
     <string name="app_offline">You are offline.</string>
