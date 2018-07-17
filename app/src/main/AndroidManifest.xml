@@ -23,7 +23,11 @@
         <activity
             android:name=".SearchActivity"
             android:label="@string/search_activity_label"
-            android:parentActivityName=".HomeActivity"/>
+            android:parentActivityName=".HomeActivity" />
+        <activity
+            android:name=".SearchResultsActivity"
+            android:label="@string/search_results_activity_label"
+            android:parentActivityName=".SearchActivity"/>
     </application>
 
 </manifest>

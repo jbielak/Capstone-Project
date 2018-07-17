@@ -20,6 +20,9 @@
     <string name="btn_search_text">Search</string>
     <string name="no_track_specified">Type song title!</string>
 
+    <!-- SearchResults Activity -->
+    <string name="search_results_activity_label">Results</string>
+
     <!-- General -->
     <string name="app_offline">You are offline.</string>
 

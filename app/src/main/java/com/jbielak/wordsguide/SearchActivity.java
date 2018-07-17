@@ -1,14 +1,21 @@
 package com.jbielak.wordsguide;
 
+import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.jbielak.wordsguide.model.Track;
+import com.jbielak.wordsguide.model.TrackList;
 import com.jbielak.wordsguide.model.TrackSearchResponse;
 import com.jbielak.wordsguide.network.MusixmatchApiUtils;
 import com.jbielak.wordsguide.network.MusixmatchService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,6 +27,8 @@ import retrofit2.Response;
 public class SearchActivity extends AppCompatActivity {
 
     private static final String TAG = SearchActivity.class.getSimpleName();
+
+    public static final String EXTRA_TRACK_LIST = "com.jbielak.wordsguide.model.TrackList";
 
     @BindView(R.id.et_search_track)
     protected EditText mTrack;
@@ -69,6 +78,7 @@ public class SearchActivity extends AppCompatActivity {
 
                 if (response.isSuccessful()) {
                     Log.d(TAG, "Search response: " + response.body().toString());
+                    showResults(response);
                 } else {
                     int statusCode = response.code();
                     Log.d(TAG, "Response unsuccessful - status code: " + statusCode);
@@ -81,5 +91,12 @@ public class SearchActivity extends AppCompatActivity {
                 Log.d(TAG, "Error loading from API: " + t.getMessage());
             }
         });
+    }
+
+    private void showResults(Response<TrackSearchResponse> response) {
+        ArrayList<TrackList> tracksFound = (ArrayList<TrackList>) response.body().getMessage().getBody().getTrackList();
+        Intent searchResultsIntent = new Intent(this, SearchResultsActivity.class);
+        searchResultsIntent.putParcelableArrayListExtra(EXTRA_TRACK_LIST, tracksFound);
+        startActivity(searchResultsIntent);
     }
 }
