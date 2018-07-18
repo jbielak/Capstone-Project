@@ -20,11 +20,11 @@ public abstract class MusixmatchApiUtils {
     public static final String TRACK_KEY = "q_track";
     public static final String ARTIST_KEY = "q_artist";
     public static final String HAS_LYRICS_KEY = "f_has_lyrics";
-    public static final double HAS_LYRICS_VALUE_DEFAULT = 1.0;
+    public static final int HAS_LYRICS_VALUE_DEFAULT = 1;
     public static final String SORT_BY_TRACK_RATING_KEY = "s_track_rating";
     public static final String SORT_BY_TRACK_RATING_VALUE_DEFAULT = "desc";
     public static final String PAGE_SIZE_KEY = "page_size";
-    public static final double PAGE_SIZE_DEFAULT_VALUE = 20;
+    public static final int PAGE_SIZE_DEFAULT_VALUE = 50;
     public static final String PAGE_KEY = "page";
 
     public static MusixmatchService getMusixmatchService() {

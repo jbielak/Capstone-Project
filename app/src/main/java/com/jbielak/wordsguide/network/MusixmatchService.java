@@ -13,9 +13,9 @@ public interface MusixmatchService {
             @Query(MusixmatchApiUtils.API_KEY) String apiKey,
             @Query(MusixmatchApiUtils.TRACK_KEY) String track,
             @Query(MusixmatchApiUtils.ARTIST_KEY) String artist,
-            @Query(MusixmatchApiUtils.HAS_LYRICS_KEY) Double hasLyrics,
+            @Query(MusixmatchApiUtils.HAS_LYRICS_KEY) Integer hasLyrics,
             @Query(MusixmatchApiUtils.SORT_BY_TRACK_RATING_KEY) String sortByTrackRating,
-            @Query(MusixmatchApiUtils.PAGE_SIZE_KEY) Double pageSize,
-            @Query(MusixmatchApiUtils.PAGE_KEY) Double page);
+            @Query(MusixmatchApiUtils.PAGE_SIZE_KEY) Integer pageSize,
+            @Query(MusixmatchApiUtils.PAGE_KEY) Integer page);
 
 }

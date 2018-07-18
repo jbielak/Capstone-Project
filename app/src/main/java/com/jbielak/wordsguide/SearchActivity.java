@@ -1,22 +1,18 @@
 package com.jbielak.wordsguide;
 
 import android.content.Intent;
-import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.jbielak.wordsguide.model.Track;
 import com.jbielak.wordsguide.model.TrackList;
 import com.jbielak.wordsguide.model.TrackSearchResponse;
 import com.jbielak.wordsguide.network.MusixmatchApiUtils;
 import com.jbielak.wordsguide.network.MusixmatchService;
 
 import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -70,12 +66,12 @@ public class SearchActivity extends AppCompatActivity {
     private void findTrack(String track, String artist) {
         mService.getTracks(MusixmatchApiUtils.API_KEY_VALUE, track, artist,
                 MusixmatchApiUtils.HAS_LYRICS_VALUE_DEFAULT,
-                MusixmatchApiUtils.SORT_BY_TRACK_RATING_VALUE_DEFAULT,
-                null, null).enqueue(new Callback<TrackSearchResponse>() {
+                MusixmatchApiUtils.SORT_BY_TRACK_RATING_VALUE_DEFAULT,null,null)
+                .enqueue(new Callback<TrackSearchResponse>() {
 
             @Override
             public void onResponse(Call<TrackSearchResponse> call, Response<TrackSearchResponse> response) {
-
+                Log.d(TAG, "Search request URL: " + call.request().url());
                 if (response.isSuccessful()) {
                     Log.d(TAG, "Search response: " + response.body().toString());
                     showResults(response);
