@@ -24,7 +24,7 @@ public abstract class MusixmatchApiUtils {
     public static final String SORT_BY_TRACK_RATING_KEY = "s_track_rating";
     public static final String SORT_BY_TRACK_RATING_VALUE_DEFAULT = "desc";
     public static final String PAGE_SIZE_KEY = "page_size";
-    public static final int PAGE_SIZE_DEFAULT_VALUE = 50;
+    public static final int PAGE_SIZE_DEFAULT_VALUE = 30;
     public static final String PAGE_KEY = "page";
 
     public static MusixmatchService getMusixmatchService() {

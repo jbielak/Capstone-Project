@@ -23,6 +23,9 @@
     <!-- SearchResults Activity -->
     <string name="search_results_activity_label">Results</string>
 
+    <!-- Track item -->
+    <string name="track_cover_image">Track cover</string>
+
     <!-- General -->
     <string name="app_offline">You are offline.</string>
 

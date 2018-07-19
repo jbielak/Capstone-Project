@@ -54,10 +54,10 @@ public class SearchActivity extends AppCompatActivity {
             Toast.makeText(this, getString(R.string.no_track_specified), Toast.LENGTH_SHORT)
                     .show();
         } else {
-            String track = mTrack.getText().toString();
+            String track = mTrack.getText().toString().trim();
             boolean isArtistNullOrEmpty =  mArtist.getText() == null
                     || mArtist.getText().toString().isEmpty();
-            String artist = isArtistNullOrEmpty ? null : mArtist.getText().toString();
+            String artist = isArtistNullOrEmpty ? null : mArtist.getText().toString().trim();
             findTrack(track, artist);
         }
 
@@ -66,7 +66,8 @@ public class SearchActivity extends AppCompatActivity {
     private void findTrack(String track, String artist) {
         mService.getTracks(MusixmatchApiUtils.API_KEY_VALUE, track, artist,
                 MusixmatchApiUtils.HAS_LYRICS_VALUE_DEFAULT,
-                MusixmatchApiUtils.SORT_BY_TRACK_RATING_VALUE_DEFAULT,null,null)
+                MusixmatchApiUtils.SORT_BY_TRACK_RATING_VALUE_DEFAULT,
+                MusixmatchApiUtils.PAGE_SIZE_DEFAULT_VALUE,null)
                 .enqueue(new Callback<TrackSearchResponse>() {
 
             @Override
