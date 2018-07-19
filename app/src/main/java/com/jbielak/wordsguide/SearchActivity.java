@@ -75,7 +75,12 @@ public class SearchActivity extends AppCompatActivity {
                 Log.d(TAG, "Search request URL: " + call.request().url());
                 if (response.isSuccessful()) {
                     Log.d(TAG, "Search response: " + response.body().toString());
-                    showResults(response);
+                    if (response.body().getMessage().getHeader().getAvailable() == 0) {
+                        Toast.makeText(getApplicationContext(),
+                                R.string.no_results, Toast.LENGTH_LONG).show();
+                    } else {
+                        showResults(response);
+                    }
                 } else {
                     int statusCode = response.code();
                     Log.d(TAG, "Response unsuccessful - status code: " + statusCode);

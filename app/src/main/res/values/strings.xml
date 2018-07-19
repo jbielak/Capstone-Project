@@ -19,6 +19,7 @@
     <string name="edit_text_artist_hint">Type artist</string>
     <string name="btn_search_text">Search</string>
     <string name="no_track_specified">Type song title!</string>
+    <string name="no_results">No results, try again!</string>
 
     <!-- SearchResults Activity -->
     <string name="search_results_activity_label">Results</string>
