@@ -27,7 +27,11 @@
         <activity
             android:name=".SearchResultsActivity"
             android:label="@string/search_results_activity_label"
-            android:parentActivityName=".SearchActivity"/>
+            android:parentActivityName=".SearchActivity" />
+        <activity
+            android:name=".TrackActivity"
+            android:label="@string/track_activity_label"
+            android:parentActivityName=".SearchResultsActivity"/>
     </application>
 
 </manifest>

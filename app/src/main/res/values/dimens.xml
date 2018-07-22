@@ -28,4 +28,9 @@
     <dimen name="track_item_margin_left">10dp</dimen>
     <dimen name="track_title_text_size">18sp</dimen>
 
+    <!-- Track Activity -->
+    <dimen name="track_activity_padding">15dp</dimen>
+    <dimen name="track_details_title_text_size">24sp</dimen>
+    <dimen name="track_details_artist_text_size">17sp</dimen>
+
 </resources>

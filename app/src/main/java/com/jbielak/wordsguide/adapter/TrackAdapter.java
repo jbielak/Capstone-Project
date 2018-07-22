@@ -1,6 +1,7 @@
 package com.jbielak.wordsguide.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jbielak.wordsguide.R;
+import com.jbielak.wordsguide.TrackActivity;
 import com.jbielak.wordsguide.model.Track;
 import com.jbielak.wordsguide.model.TrackList;
 import com.squareup.picasso.Picasso;
@@ -21,6 +23,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.ViewHolder> {
+
+    public static final String EXTRA_TRACK = "com.jbielak.wordsguide.model.Track";
 
     private Context mContext;
     private List<TrackList> mTrackList;
@@ -56,7 +60,9 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.ViewHolder> 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //TODO: show track details
+                    Intent trackIntent = new Intent(mContext, TrackActivity.class);
+                    trackIntent.putExtra(EXTRA_TRACK, track);
+                    mContext.startActivity(trackIntent);
                 }
             });
         }
