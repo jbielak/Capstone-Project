@@ -27,6 +27,9 @@ public abstract class MusixmatchApiUtils {
     public static final int PAGE_SIZE_DEFAULT_VALUE = 30;
     public static final String PAGE_KEY = "page";
 
+    public static final String METHOD_TRACK_LYRICS_GET = "track.lyrics.get?";
+    public static final String TRACK_ID = "track_id";
+
     public static MusixmatchService getMusixmatchService() {
         return RetrofitClient.getClient(BASE_URL).create(MusixmatchService.class);
     }
