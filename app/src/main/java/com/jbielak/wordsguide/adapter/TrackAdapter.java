@@ -17,6 +17,7 @@ import com.jbielak.wordsguide.model.Track;
 import com.jbielak.wordsguide.model.TrackList;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -85,5 +86,13 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.ViewHolder> 
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
+    }
+
+    public void setTrackList(List<TrackList> trackList) {
+        mTrackList = trackList;
+    }
+
+    public ArrayList<TrackList> getTrackList() {
+        return (ArrayList<TrackList>) mTrackList;
     }
 }
