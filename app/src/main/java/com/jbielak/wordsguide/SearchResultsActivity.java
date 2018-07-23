@@ -20,6 +20,7 @@ public class SearchResultsActivity extends AppCompatActivity {
 
     private List<TrackList> mTracks;
     private TrackAdapter mTrackAdapter;
+    private int mLastFirstVisiblePosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,8 @@ public class SearchResultsActivity extends AppCompatActivity {
             mTracks = savedInstanceState.getParcelableArrayList(SearchActivity.EXTRA_TRACK_LIST);
             mTrackAdapter = new TrackAdapter(this, mTracks);
             setupTracksListView(mTrackAdapter);
+            ((LinearLayoutManager) mRecyclerViewTracks.getLayoutManager())
+                    .scrollToPosition(mLastFirstVisiblePosition);
         } else {
             if (getIntent().hasExtra(SearchActivity.EXTRA_TRACK_LIST)) {
                 mTracks = getIntent().getParcelableArrayListExtra(SearchActivity.EXTRA_TRACK_LIST);
@@ -45,6 +48,8 @@ public class SearchResultsActivity extends AppCompatActivity {
         if (mTrackAdapter.getItemCount() > 0) {
             outState.putParcelableArrayList(SearchActivity.EXTRA_TRACK_LIST,
                     mTrackAdapter.getTrackList());
+            mLastFirstVisiblePosition = ((LinearLayoutManager) mRecyclerViewTracks
+                    .getLayoutManager()).findFirstCompletelyVisibleItemPosition();
         }
         super.onSaveInstanceState(outState);
     }
