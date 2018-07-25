@@ -39,6 +39,18 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_artist" />
 
+            <Button
+                android:id="@+id/btn_add_to_favorites"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/btn_favorites"
+                android:drawablePadding="@dimen/btn_drawable_padding"
+                android:drawableStart="@drawable/ic_favorite_black_24dp"
+                android:text="@string/btn_favorites"
+                android:textSize="@dimen/btn_text_size"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
             <TextView
                 android:id="@+id/tv_lyrics"
                 android:layout_width="match_parent"
