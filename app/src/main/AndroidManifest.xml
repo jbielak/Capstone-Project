@@ -31,7 +31,11 @@
         <activity
             android:name=".TrackActivity"
             android:label="@string/track_activity_label"
-            android:parentActivityName=".SearchActivity"/>
+            android:parentActivityName=".SearchActivity" />
+        <activity
+            android:name=".FavoritesActivity"
+            android:label="@string/favorites_activity_label"
+            android:parentActivityName=".HomeActivity"></activity>
     </application>
 
 </manifest>

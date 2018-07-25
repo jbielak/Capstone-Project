@@ -31,6 +31,9 @@
     <string name="track_activity_label">Lyrics</string>
     <string name="message_track_added_to_favorites">Track successfully added to favorites!</string>
 
+    <!-- Favorites Activity -->
+    <string name="favorites_activity_label">Favorites</string>
+
     <!-- General -->
     <string name="app_offline">You are offline.</string>
 

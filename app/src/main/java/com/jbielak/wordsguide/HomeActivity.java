@@ -110,6 +110,13 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
+    @OnClick(R.id.btn_favorites)
+    protected void showFavorites() {
+        Intent searchIntent = new Intent(this, FavoritesActivity.class);
+        startActivity(searchIntent);
+
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
