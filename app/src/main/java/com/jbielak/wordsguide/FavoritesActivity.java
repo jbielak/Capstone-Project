@@ -1,5 +1,6 @@
 package com.jbielak.wordsguide;
 
+import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +27,8 @@ import butterknife.ButterKnife;
 
 public class FavoritesActivity extends AppCompatActivity {
 
+    public static final String EXTRA_FAVORITE_TRACKS = "favorite_tracks";
+
     @BindView(R.id.rv_favorite_tracks)
     RecyclerView mRecyclerViewFavoriteTracks;
 
@@ -36,6 +39,7 @@ public class FavoritesActivity extends AppCompatActivity {
     private ChildEventListener mChildEventListener;
     private List<TrackDto> mFavoriteTracks = new ArrayList<>();
     private TrackDtoAdapter mTrackDtoAdapter;
+    private RemoveItemListener mRemoveItemListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,9 +58,30 @@ public class FavoritesActivity extends AppCompatActivity {
         mTracksDatabaseReference = mFirebaseDatabase.getReference()
                 .child(TrackActivity.FAVORITE_TRACKS_KEY)
                 .child(mUserDisplayName);
+        mRemoveItemListener = new RemoveItemListener() {
+            @Override
+            public void onItemRemoved(String itemId, int position) {
+                removeFromFavorites(itemId, position);
+            }
+        };
 
-        attachDatabaseReadListener();
+        if (savedInstanceState != null
+                && savedInstanceState.containsKey(EXTRA_FAVORITE_TRACKS)) {
+            mFavoriteTracks = savedInstanceState.getParcelableArrayList(EXTRA_FAVORITE_TRACKS);
+            mTrackDtoAdapter = new TrackDtoAdapter(this, mFavoriteTracks, mRemoveItemListener);
+            setupFavoriteTracksListView(mTrackDtoAdapter);
+        } else {
+            attachDatabaseReadListener();
+        }
 
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        if (mTrackDtoAdapter.getItemCount() > 0) {
+            outState.putParcelableArrayList(EXTRA_FAVORITE_TRACKS, mTrackDtoAdapter.getTrackList());
+        }
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -77,12 +102,7 @@ public class FavoritesActivity extends AppCompatActivity {
                         TrackDto track = dataSnapshot.getValue(TrackDto.class);
                         mFavoriteTracks.add(track);
                         mTrackDtoAdapter = new TrackDtoAdapter(getApplicationContext(), mFavoriteTracks,
-                                new RemoveItemListener() {
-                            @Override
-                            public void onItemRemoved(String itemId, int position) {
-                                removeFromFavorites(itemId, position);
-                            }
-                        });
+                                mRemoveItemListener);
                         setupFavoriteTracksListView(mTrackDtoAdapter);
                     }
                 }
