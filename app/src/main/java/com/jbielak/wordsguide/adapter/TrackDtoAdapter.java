@@ -8,10 +8,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.jbielak.wordsguide.FavoritesActivity;
 import com.jbielak.wordsguide.R;
+import com.jbielak.wordsguide.RemoveItemListener;
 import com.jbielak.wordsguide.TrackActivity;
 import com.jbielak.wordsguide.dto.TrackDto;
 import com.jbielak.wordsguide.model.Track;
@@ -28,10 +31,12 @@ public class TrackDtoAdapter extends RecyclerView.Adapter<TrackDtoAdapter.ViewHo
 
     private Context mContext;
     private List<TrackDto> mTrackList;
+    private RemoveItemListener mRemoveItemListener;
 
-    public TrackDtoAdapter(Context context, List<TrackDto> tracks) {
+    public TrackDtoAdapter(Context context, List<TrackDto> tracks, RemoveItemListener listener) {
         mContext = context;
         mTrackList = tracks;
+        mRemoveItemListener = listener;
     }
 
     @NonNull
@@ -57,6 +62,16 @@ public class TrackDtoAdapter extends RecyclerView.Adapter<TrackDtoAdapter.ViewHo
 
             }
 
+            holder.mBtnRemoveFromFavorites.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (mRemoveItemListener != null) {
+                        int position = mTrackList.indexOf(track);
+                        mRemoveItemListener.onItemRemoved(String.valueOf(track.getTrackId()), position);
+                    }
+                }
+            });
+
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -78,6 +93,8 @@ public class TrackDtoAdapter extends RecyclerView.Adapter<TrackDtoAdapter.ViewHo
         TextView mTitleTextView;
         @BindView(R.id.tv_artist)
         TextView mArtistTextView;
+        @BindView(R.id.btn_remove)
+        ImageButton mBtnRemoveFromFavorites;
 
         public ViewHolder(View itemView) {
             super(itemView);

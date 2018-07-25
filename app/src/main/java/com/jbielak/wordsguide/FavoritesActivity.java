@@ -67,28 +67,36 @@ public class FavoritesActivity extends AppCompatActivity {
     }
 
     private void attachDatabaseReadListener() {
+
         if (mChildEventListener == null) {
             mChildEventListener = new ChildEventListener() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                     if (dataSnapshot.exists()) {
+
                         TrackDto track = dataSnapshot.getValue(TrackDto.class);
                         mFavoriteTracks.add(track);
-                        mTrackDtoAdapter = new TrackDtoAdapter(getApplicationContext(), mFavoriteTracks);
+                        mTrackDtoAdapter = new TrackDtoAdapter(getApplicationContext(), mFavoriteTracks,
+                                new RemoveItemListener() {
+                            @Override
+                            public void onItemRemoved(String itemId, int position) {
+                                removeFromFavorites(itemId, position);
+                            }
+                        });
                         setupFavoriteTracksListView(mTrackDtoAdapter);
                     }
                 }
 
                 public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {}
 
-                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) { }
+                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {}
 
                 public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {}
 
                 public void onCancelled(@NonNull DatabaseError databaseError) {}
             };
-            mTracksDatabaseReference.addChildEventListener(mChildEventListener);
         }
+        mTracksDatabaseReference.addChildEventListener(mChildEventListener);
     }
 
     private void detachDatabaseReadListener() {
@@ -103,6 +111,22 @@ public class FavoritesActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRecyclerViewFavoriteTracks.setLayoutManager(layoutManager);
         mRecyclerViewFavoriteTracks.setAdapter(trackdtoAdapter);
+    }
+
+    public void removeFromFavorites(String trackId, int position) {
+        if (mUserDisplayName != null && !mUserDisplayName.isEmpty()) {
+            mTracksDatabaseReference.child(trackId).removeValue();
+            updateRecyclerView(position);
+            Toast.makeText(getApplicationContext(), getString(R.string.message_track_removed_from_favorites),
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void updateRecyclerView(int position) {
+        mFavoriteTracks.remove(position);
+        mRecyclerViewFavoriteTracks.removeViewAt(position);
+        mTrackDtoAdapter.notifyItemRemoved(position);
+        mTrackDtoAdapter.notifyItemRangeChanged(position,mFavoriteTracks.size());
     }
 
 }
