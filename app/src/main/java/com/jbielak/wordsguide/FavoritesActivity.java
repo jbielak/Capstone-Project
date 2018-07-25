@@ -1,13 +1,93 @@
 package com.jbielak.wordsguide;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.jbielak.wordsguide.dto.TrackDto;
+import com.jbielak.wordsguide.model.Track;
+import com.jbielak.wordsguide.network.MusixmatchApiUtils;
+import com.jbielak.wordsguide.network.MusixmatchService;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.ButterKnife;
 
 public class FavoritesActivity extends AppCompatActivity {
+
+    private String mUserDisplayName;
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mTracksDatabaseReference;
+    private FirebaseAuth mFirebaseAuth;
+    private ChildEventListener mChildEventListener;
+    private List<TrackDto> favoriteTracks = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorites);
+        ButterKnife.bind(this);
+
+        if (!MusixmatchApiUtils.isOnline(this)) {
+            Toast.makeText(this, getString(R.string.app_offline),
+                    Toast.LENGTH_SHORT).show();
+        }
+
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mUserDisplayName = mFirebaseAuth.getCurrentUser().getDisplayName();
+        mTracksDatabaseReference = mFirebaseDatabase.getReference()
+                .child(TrackActivity.FAVORITE_TRACKS_KEY)
+                .child(mUserDisplayName);
+
+        attachDatabaseReadListener();
+
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        detachDatabaseReadListener();
+        favoriteTracks.clear();
+    }
+
+    private void attachDatabaseReadListener() {
+        if (mChildEventListener == null) {
+            mChildEventListener = new ChildEventListener() {
+                @Override
+                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                    if (dataSnapshot.exists()) {
+                        TrackDto track = dataSnapshot.getValue(TrackDto.class);
+                        favoriteTracks.add(track);
+                    }
+                }
+
+                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {}
+
+                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) { }
+
+                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {}
+
+                public void onCancelled(@NonNull DatabaseError databaseError) {}
+            };
+            mTracksDatabaseReference.addChildEventListener(mChildEventListener);
+        }
+    }
+
+    private void detachDatabaseReadListener() {
+        if (mChildEventListener != null) {
+            mTracksDatabaseReference.removeEventListener(mChildEventListener);
+            mChildEventListener = null;
+        }
+    }
+
 }
