@@ -22,8 +22,7 @@
         <activity android:name=".HomeActivity" />
         <activity
             android:name=".SearchActivity"
-            android:label="@string/search_activity_label"
-            android:parentActivityName=".HomeActivity" />
+            android:label="@string/search_activity_label" />
         <activity
             android:name=".SearchResultsActivity"
             android:label="@string/search_results_activity_label"
@@ -33,12 +32,10 @@
             android:label="@string/track_activity_label" />
         <activity
             android:name=".FavoritesActivity"
-            android:label="@string/favorites_activity_label"
-            android:parentActivityName=".HomeActivity" />
+            android:label="@string/favorites_activity_label" />
         <activity
             android:name=".ChartsActivity"
-            android:label="@string/charts_activity_label"
-            android:parentActivityName=".HomeActivity" />
+            android:label="@string/charts_activity_label" />
     </application>
 
 </manifest>

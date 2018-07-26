@@ -7,6 +7,10 @@
     </string>
     <string name="btn_sign_in_via_email">Sign in</string>
 
+    <!-- Menu -->
+    <string name="menu_sign_out">Sign out</string>
+    <string name="menu_home">Home</string>
+
     <!-- HomeActivity -->
     <string name="app_home_text">Welcome!</string>
     <string name="btn_search_song">Search song</string>

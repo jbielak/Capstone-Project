@@ -4,9 +4,13 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.firebase.ui.auth.AuthUI;
 import com.jbielak.wordsguide.model.TrackList;
 import com.jbielak.wordsguide.model.TrackSearchResponse;
 import com.jbielak.wordsguide.network.MusixmatchApiUtils;
@@ -40,11 +44,50 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search);
         ButterKnife.bind(this);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         mService = MusixmatchApiUtils.getMusixmatchService();
 
         if (!MusixmatchApiUtils.isOnline(this)) {
             Toast.makeText(this, getString(R.string.app_offline),
                     Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_list, menu);
+        MenuItem item = menu.findItem(R.id.search);
+        item.setVisible(false);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.sign_out:
+                AuthUI.getInstance().signOut(getApplicationContext());
+                finish();
+                return true;
+            case R.id.app_home:
+                Intent intentHome = new Intent(getApplicationContext(), HomeActivity.class);
+                startActivity(intentHome);
+                return true;
+            case R.id.favorites:
+                Intent intentFavorites = new Intent(getApplicationContext(), FavoritesActivity.class);
+                startActivity(intentFavorites);
+                return true;
+            case R.id.charts:
+                Intent intentCharts = new Intent(getApplicationContext(), ChartsActivity.class);
+                startActivity(intentCharts);
+                return true;
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 

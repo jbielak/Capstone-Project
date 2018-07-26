@@ -2,6 +2,7 @@ package com.jbielak.wordsguide;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
@@ -9,10 +10,14 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.ui.auth.AuthUI;
 import com.jbielak.wordsguide.adapter.TrackAdapter;
 import com.jbielak.wordsguide.model.TrackList;
 import com.jbielak.wordsguide.model.charts.ChartsResponse;
@@ -56,6 +61,9 @@ public class ChartsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_charts);
         ButterKnife.bind(this);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         currentLocale = getDeviceLocale();
         setupChartsInfo(currentLocale);
 
@@ -86,6 +94,46 @@ public class ChartsActivity extends AppCompatActivity {
                     .getLayoutManager()).findFirstCompletelyVisibleItemPosition();
         }
         super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_list, menu);
+        MenuItem item = menu.findItem(R.id.charts);
+        item.setVisible(false);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.sign_out:
+                AuthUI.getInstance().signOut(getApplicationContext());
+                finish();
+                return true;
+            case R.id.app_home:
+                Intent intentHome = new Intent(getApplicationContext(), HomeActivity.class);
+                startActivity(intentHome);
+                return true;
+            case R.id.search:
+                Intent intentSearch = new Intent(getApplicationContext(), SearchActivity.class);
+                startActivity(intentSearch);
+                return true;
+            case R.id.favorites:
+                Intent intentFavorites = new Intent(getApplicationContext(), FavoritesActivity.class);
+                startActivity(intentFavorites);
+                return true;
+            case R.id.charts:
+                Intent intentCharts = new Intent(getApplicationContext(), ChartsActivity.class);
+                startActivity(intentCharts);
+                return true;
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private static Locale getDeviceLocale() {
