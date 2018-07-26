@@ -1,6 +1,5 @@
 package com.jbielak.wordsguide;
 
-import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -40,6 +39,7 @@ public class FavoritesActivity extends AppCompatActivity {
     private List<TrackDto> mFavoriteTracks = new ArrayList<>();
     private TrackDtoAdapter mTrackDtoAdapter;
     private RemoveItemListener mRemoveItemListener;
+    private int mLastFirstVisiblePosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +70,8 @@ public class FavoritesActivity extends AppCompatActivity {
             mFavoriteTracks = savedInstanceState.getParcelableArrayList(EXTRA_FAVORITE_TRACKS);
             mTrackDtoAdapter = new TrackDtoAdapter(this, mFavoriteTracks, mRemoveItemListener);
             setupFavoriteTracksListView(mTrackDtoAdapter);
+            ((LinearLayoutManager) mRecyclerViewFavoriteTracks.getLayoutManager())
+                    .scrollToPosition(mLastFirstVisiblePosition);
         } else {
             attachDatabaseReadListener();
         }
@@ -80,6 +82,8 @@ public class FavoritesActivity extends AppCompatActivity {
     public void onSaveInstanceState(Bundle outState) {
         if (mTrackDtoAdapter.getItemCount() > 0) {
             outState.putParcelableArrayList(EXTRA_FAVORITE_TRACKS, mTrackDtoAdapter.getTrackList());
+            mLastFirstVisiblePosition = ((LinearLayoutManager) mRecyclerViewFavoriteTracks
+                    .getLayoutManager()).findFirstCompletelyVisibleItemPosition();
         }
         super.onSaveInstanceState(outState);
     }
@@ -88,7 +92,6 @@ public class FavoritesActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         detachDatabaseReadListener();
-        mFavoriteTracks.clear();
     }
 
     private void attachDatabaseReadListener() {
