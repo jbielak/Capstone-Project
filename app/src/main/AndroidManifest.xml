@@ -34,7 +34,11 @@
         <activity
             android:name=".FavoritesActivity"
             android:label="@string/favorites_activity_label"
-            android:parentActivityName=".HomeActivity"></activity>
+            android:parentActivityName=".HomeActivity" />
+        <activity
+            android:name=".ChartsActivity"
+            android:label="@string/charts_activity_label"
+            android:parentActivityName=".HomeActivity" />
     </application>
 
 </manifest>

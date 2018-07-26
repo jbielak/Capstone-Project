@@ -117,6 +117,12 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
+    @OnClick(R.id.btn_charts)
+    protected void showCharts() {
+        Intent chartsIntent = new Intent(this, ChartsActivity.class);
+        startActivity(chartsIntent);
+    }
+
     @Override
     protected void onResume() {
         super.onResume();

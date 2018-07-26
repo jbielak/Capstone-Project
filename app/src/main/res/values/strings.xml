@@ -36,6 +36,9 @@
     <string name="message_track_removed_from_favorites">Track successfully removed from favorites!</string>
     <string name="btn_remove_track_from_favorites">Remove from favorites</string>
 
+    <!-- Charts Activity -->
+    <string name="charts_activity_label">Charts</string>
+
     <!-- General -->
     <string name="app_offline">You are offline.</string>
 
