@@ -17,6 +17,7 @@ import com.jbielak.wordsguide.RemoveItemListener;
 import com.jbielak.wordsguide.TrackActivity;
 import com.jbielak.wordsguide.converter.TrackConverter;
 import com.jbielak.wordsguide.dto.TrackDto;
+import com.jbielak.wordsguide.widget.WordsGuideWidgetService;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -76,6 +77,8 @@ public class TrackDtoAdapter extends RecyclerView.Adapter<TrackDtoAdapter.ViewHo
                 @Override
                 public void onClick(View view) {
                     Intent trackIntent = new Intent(mContext, TrackActivity.class);
+                    WordsGuideWidgetService.startActionUpdateTrackWidgets(mContext,
+                            TrackConverter.toTrack(track));
                     trackIntent.putExtra(TrackAdapter.EXTRA_TRACK, TrackConverter.toTrack(track));
                     trackIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                     mContext.startActivity(trackIntent);

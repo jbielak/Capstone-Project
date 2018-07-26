@@ -36,6 +36,18 @@
         <activity
             android:name=".ChartsActivity"
             android:label="@string/charts_activity_label" />
+
+        <receiver android:name=".widget.WordsGuideWidgetProvider"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/words_guide_widget_info" />
+        </receiver>
+        <service android:name=".widget.WordsGuideWidgetService" />
     </application>
 
 </manifest>

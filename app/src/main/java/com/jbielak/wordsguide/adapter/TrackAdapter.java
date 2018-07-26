@@ -2,7 +2,6 @@ package com.jbielak.wordsguide.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,6 +14,7 @@ import com.jbielak.wordsguide.R;
 import com.jbielak.wordsguide.TrackActivity;
 import com.jbielak.wordsguide.model.Track;
 import com.jbielak.wordsguide.model.TrackList;
+import com.jbielak.wordsguide.widget.WordsGuideWidgetService;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -64,6 +64,7 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.ViewHolder> 
                 @Override
                 public void onClick(View view) {
                     Intent trackIntent = new Intent(mContext, TrackActivity.class);
+                    WordsGuideWidgetService.startActionUpdateTrackWidgets(mContext, track);
                     trackIntent.putExtra(EXTRA_TRACK, track);
                     mContext.startActivity(trackIntent);
                 }
