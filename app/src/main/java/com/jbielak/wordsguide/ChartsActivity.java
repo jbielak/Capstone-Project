@@ -43,6 +43,7 @@ public class ChartsActivity extends AppCompatActivity {
     private MusixmatchService mService;
     private List<TrackList> mTracks;
     private TrackAdapter mTrackAdapter;
+    private int mLastFirstVisiblePosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +66,8 @@ public class ChartsActivity extends AppCompatActivity {
             mTrackAdapter = new TrackAdapter(this, mTracks);
             setupChartsInfo(currentLocale);
             setupChartsList();
+            ((LinearLayoutManager) mRecyclerViewTopTracks.getLayoutManager())
+                    .scrollToPosition(mLastFirstVisiblePosition);
         } else {
             getCharts();
         }
@@ -74,6 +77,8 @@ public class ChartsActivity extends AppCompatActivity {
     public void onSaveInstanceState(Bundle outState) {
         if (mTrackAdapter.getItemCount() > 0) {
             outState.putParcelableArrayList(EXTRA_TOP_TRACKS, mTrackAdapter.getTrackList());
+            mLastFirstVisiblePosition = ((LinearLayoutManager) mRecyclerViewTopTracks
+                    .getLayoutManager()).findFirstCompletelyVisibleItemPosition();
         }
         super.onSaveInstanceState(outState);
     }
