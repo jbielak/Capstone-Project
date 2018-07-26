@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,12 +18,16 @@ import com.jbielak.wordsguide.model.TrackList;
 import com.jbielak.wordsguide.model.charts.ChartsResponse;
 import com.jbielak.wordsguide.network.MusixmatchApiUtils;
 import com.jbielak.wordsguide.network.MusixmatchService;
+import com.mukesh.countrypicker.Country;
+import com.mukesh.countrypicker.CountryPicker;
+import com.mukesh.countrypicker.OnCountryPickerListener;
 
 import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -69,7 +74,7 @@ public class ChartsActivity extends AppCompatActivity {
             ((LinearLayoutManager) mRecyclerViewTopTracks.getLayoutManager())
                     .scrollToPosition(mLastFirstVisiblePosition);
         } else {
-            getCharts();
+            getCharts(currentLocale.getCountry().toLowerCase());
         }
     }
 
@@ -94,10 +99,10 @@ public class ChartsActivity extends AppCompatActivity {
         return locale;
     }
 
-    private void getCharts() {
+    private void getCharts(String countryCode) {
         mService.getCharts(MusixmatchApiUtils.API_KEY_VALUE,
                 MusixmatchApiUtils.PAGE_SIZE_DEFAULT_VALUE,
-                null, currentLocale.getCountry().toLowerCase(),
+                null, countryCode,
                 MusixmatchApiUtils.HAS_LYRICS_VALUE_DEFAULT)
                 .enqueue(new Callback<ChartsResponse>() {
 
@@ -127,10 +132,30 @@ public class ChartsActivity extends AppCompatActivity {
                 });
     }
 
+    @OnClick(R.id.btn_select_country)
+    protected void selectCountry () {
+        CountryPicker countryPicker =
+                new CountryPicker.Builder().with(getApplicationContext())
+                        .listener(new OnCountryPickerListener() {
+                            @Override public void onSelectCountry(Country country) {
+                                setupChartsInfo(country.getName());
+                                getCharts(country.getCode().toLowerCase());
+                            }
+                        })
+                        .build();
+        countryPicker.showDialog(getSupportFragmentManager());
+    }
+
     @SuppressLint("StringFormatMatches")
     private void setupChartsInfo(Locale locale) {
         String country = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
                 ? getCountryNameInEnglish(locale) : locale.getDisplayCountry();
+        mTextViewChartInfo.setText(getResources()
+                .getString(R.string.charts_info,
+                        String.valueOf(MusixmatchApiUtils.PAGE_SIZE_DEFAULT_VALUE), country));
+    }
+
+    private void setupChartsInfo(String country) {
         mTextViewChartInfo.setText(getResources()
                 .getString(R.string.charts_info,
                         String.valueOf(MusixmatchApiUtils.PAGE_SIZE_DEFAULT_VALUE), country));
