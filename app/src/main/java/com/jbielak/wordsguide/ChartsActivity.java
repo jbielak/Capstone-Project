@@ -1,6 +1,7 @@
 package com.jbielak.wordsguide;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.content.res.Resources;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +19,7 @@ import com.jbielak.wordsguide.network.MusixmatchApiUtils;
 import com.jbielak.wordsguide.network.MusixmatchService;
 
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,7 +37,7 @@ public class ChartsActivity extends AppCompatActivity {
     @BindView(R.id.rv_top_tracks)
     RecyclerView mRecyclerViewTopTracks;
 
-    private String currentCountryCode;
+    private Locale currentLocale;
     private MusixmatchService mService;
     private List<TrackList> mTracks;
     private TrackAdapter mTrackAdapter;
@@ -46,8 +48,8 @@ public class ChartsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_charts);
         ButterKnife.bind(this);
 
-        currentCountryCode = getCountryCode();
-        setupChartsInfo(currentCountryCode);
+        currentLocale = getDeviceLocale();
+        setupChartsInfo(currentLocale);
 
         mService = MusixmatchApiUtils.getMusixmatchService();
 
@@ -59,22 +61,21 @@ public class ChartsActivity extends AppCompatActivity {
 
     }
 
-    private static String getCountryCode() {
-        String localeCountry;
+    private static Locale getDeviceLocale() {
+        Locale locale;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            localeCountry = Resources.getSystem().getConfiguration()
-                    .getLocales().get(0).getCountry().toLowerCase();
+            locale = Resources.getSystem().getConfiguration()
+                    .getLocales().get(0);
         } else {
-            localeCountry = Resources.getSystem().getConfiguration()
-                    .locale.getCountry().toLowerCase();
+            locale = Resources.getSystem().getConfiguration().locale;
         }
-        return localeCountry;
+        return locale;
     }
 
     private void getCharts() {
         mService.getCharts(MusixmatchApiUtils.API_KEY_VALUE,
                 MusixmatchApiUtils.PAGE_SIZE_DEFAULT_VALUE,
-                null, currentCountryCode,
+                null, currentLocale.getCountry().toLowerCase(),
                 MusixmatchApiUtils.HAS_LYRICS_VALUE_DEFAULT)
                 .enqueue(new Callback<ChartsResponse>() {
 
@@ -105,10 +106,12 @@ public class ChartsActivity extends AppCompatActivity {
     }
 
     @SuppressLint("StringFormatMatches")
-    private void setupChartsInfo(String countryName) {
+    private void setupChartsInfo(Locale locale) {
+        String country = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
+                ? getCountryNameInEnglish(locale)  : locale.getDisplayCountry();
         mTextViewChartInfo.setText(getResources()
                 .getString(R.string.charts_info,
-                        String.valueOf(MusixmatchApiUtils.PAGE_SIZE_DEFAULT_VALUE), countryName));
+                        String.valueOf(MusixmatchApiUtils.PAGE_SIZE_DEFAULT_VALUE), country));
     }
 
     private void setupChartsList() {
@@ -117,5 +120,11 @@ public class ChartsActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRecyclerViewTopTracks.setLayoutManager(layoutManager);
         mRecyclerViewTopTracks.setAdapter(mTrackAdapter);
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private static String getCountryNameInEnglish(Locale locale) {
+        Locale english = new Locale.Builder().setLanguage("en").build();
+        return locale.getDisplayCountry(english);
     }
 }
