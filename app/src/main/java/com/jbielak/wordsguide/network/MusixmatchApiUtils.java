@@ -30,6 +30,9 @@ public abstract class MusixmatchApiUtils {
     public static final String METHOD_TRACK_LYRICS_GET = "track.lyrics.get?";
     public static final String TRACK_ID = "track_id";
 
+    public static final String METHOD_CHART_TRACKS_GET = "chart.tracks.get?";
+    public static final String COUNTRY_KEY = "country";
+
     public static MusixmatchService getMusixmatchService() {
         return RetrofitClient.getClient(BASE_URL).create(MusixmatchService.class);
     }

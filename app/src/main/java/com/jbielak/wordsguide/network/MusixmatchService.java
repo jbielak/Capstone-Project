@@ -1,6 +1,8 @@
 package com.jbielak.wordsguide.network;
 
+import com.jbielak.wordsguide.ChartsActivity;
 import com.jbielak.wordsguide.model.TrackSearchResponse;
+import com.jbielak.wordsguide.model.charts.ChartsResponse;
 import com.jbielak.wordsguide.model.lyrics.LyricsResponse;
 
 import retrofit2.Call;
@@ -24,4 +26,12 @@ public interface MusixmatchService {
     Call<LyricsResponse> getLyrics(
             @Query(MusixmatchApiUtils.API_KEY) String apiKey,
             @Query(MusixmatchApiUtils.TRACK_ID) String trackId);
+
+    @GET(MusixmatchApiUtils.METHOD_CHART_TRACKS_GET)
+    Call<ChartsResponse> getCharts(
+            @Query(MusixmatchApiUtils.API_KEY) String apiKey,
+            @Query(MusixmatchApiUtils.PAGE_SIZE_KEY) Integer pageSize,
+            @Query(MusixmatchApiUtils.PAGE_KEY) Integer page,
+            @Query(MusixmatchApiUtils.COUNTRY_KEY) String country,
+            @Query(MusixmatchApiUtils.HAS_LYRICS_KEY) Integer hasLyrics);
 }
