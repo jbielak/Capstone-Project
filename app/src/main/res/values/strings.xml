@@ -38,6 +38,7 @@
 
     <!-- Charts Activity -->
     <string name="charts_activity_label">Charts</string>
+    <string name="charts_info">Top %1$s tracks in %2$s</string>
 
     <!-- General -->
     <string name="app_offline">You are offline.</string>
