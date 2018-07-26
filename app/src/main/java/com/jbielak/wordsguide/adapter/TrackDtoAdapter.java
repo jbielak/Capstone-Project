@@ -2,7 +2,6 @@ package com.jbielak.wordsguide.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,9 +15,8 @@ import com.jbielak.wordsguide.FavoritesActivity;
 import com.jbielak.wordsguide.R;
 import com.jbielak.wordsguide.RemoveItemListener;
 import com.jbielak.wordsguide.TrackActivity;
+import com.jbielak.wordsguide.converter.TrackConverter;
 import com.jbielak.wordsguide.dto.TrackDto;
-import com.jbielak.wordsguide.model.Track;
-import com.jbielak.wordsguide.model.TrackList;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -75,7 +73,10 @@ public class TrackDtoAdapter extends RecyclerView.Adapter<TrackDtoAdapter.ViewHo
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //TODO: display track
+                    Intent trackIntent = new Intent(mContext, TrackActivity.class);
+                    trackIntent.putExtra(TrackAdapter.EXTRA_TRACK, TrackConverter.toTrack(track));
+                    trackIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    mContext.startActivity(trackIntent);
                 }
             });
         }
