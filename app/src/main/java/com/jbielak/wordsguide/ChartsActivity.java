@@ -29,6 +29,8 @@ import retrofit2.Response;
 
 public class ChartsActivity extends AppCompatActivity {
 
+    public static final String EXTRA_TOP_TRACKS = "top_tracks";
+
     private static final String TAG = ChartsActivity.class.getSimpleName();
 
     @BindView(R.id.tv_charts_info)
@@ -57,8 +59,23 @@ public class ChartsActivity extends AppCompatActivity {
             Toast.makeText(this, getString(R.string.app_offline),
                     Toast.LENGTH_SHORT).show();
         }
-        getCharts();
 
+        if (savedInstanceState != null && savedInstanceState.containsKey(EXTRA_TOP_TRACKS)) {
+            mTracks = savedInstanceState.getParcelableArrayList(EXTRA_TOP_TRACKS);
+            mTrackAdapter = new TrackAdapter(this, mTracks);
+            setupChartsInfo(currentLocale);
+            setupChartsList();
+        } else {
+            getCharts();
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        if (mTrackAdapter.getItemCount() > 0) {
+            outState.putParcelableArrayList(EXTRA_TOP_TRACKS, mTrackAdapter.getTrackList());
+        }
+        super.onSaveInstanceState(outState);
     }
 
     private static Locale getDeviceLocale() {
@@ -108,7 +125,7 @@ public class ChartsActivity extends AppCompatActivity {
     @SuppressLint("StringFormatMatches")
     private void setupChartsInfo(Locale locale) {
         String country = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
-                ? getCountryNameInEnglish(locale)  : locale.getDisplayCountry();
+                ? getCountryNameInEnglish(locale) : locale.getDisplayCountry();
         mTextViewChartInfo.setText(getResources()
                 .getString(R.string.charts_info,
                         String.valueOf(MusixmatchApiUtils.PAGE_SIZE_DEFAULT_VALUE), country));
