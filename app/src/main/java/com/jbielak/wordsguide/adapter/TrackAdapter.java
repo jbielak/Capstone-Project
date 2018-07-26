@@ -54,6 +54,8 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.ViewHolder> 
                 Picasso.get()
                         .load(track.getAlbumCoverart100x100())
                         .resize(100,100)
+                        .placeholder(R.drawable.ic_image_black_24dp)
+                        .error(R.drawable.ic_broken_image_black_24dp)
                         .into(holder.mCoverImageView);
 
             }
