@@ -33,6 +33,7 @@
     <dimen name="track_activity_margin">15dp</dimen>
     <dimen name="track_details_title_text_size">24sp</dimen>
     <dimen name="track_details_artist_text_size">17sp</dimen>
+    <dimen name="track_details_button_margin">10dp</dimen>
 
     <!-- Charts Activity -->
     <dimen name="charts_activity_info_text_size">30sp</dimen>

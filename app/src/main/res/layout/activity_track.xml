@@ -19,9 +19,9 @@
                 android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:singleLine="false"
                 android:textSize="@dimen/track_details_title_text_size"
                 android:textStyle="bold"
-                android:singleLine="false"
                 app:layout_constrainedHeight="true"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -41,26 +41,26 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_artist" />
 
-            <Button
-                android:id="@+id/btn_add_to_favorites"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/btn_favorites"
-                android:drawablePadding="@dimen/btn_drawable_padding"
-                android:drawableStart="@drawable/ic_favorite_black_24dp"
-                android:text="@string/btn_favorites"
-                android:textSize="@dimen/btn_text_size"
-                app:layout_constraintTop_toBottomOf="@id/tv_album" />
-
             <TextView
                 android:id="@+id/tv_lyrics"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/track_activity_margin"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/btn_add_to_favorites" />
+                app:layout_constraintTop_toBottomOf="@id/tv_album" />
 
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_add_to_favorites"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/track_details_button_margin"
+        android:layout_marginEnd="@dimen/track_details_button_margin"
+        android:contentDescription="@string/btn_favorites"
+        android:src="@drawable/ic_favorite_black_24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

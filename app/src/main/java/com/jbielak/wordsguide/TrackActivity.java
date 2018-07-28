@@ -4,7 +4,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,9 +16,6 @@ import com.jbielak.wordsguide.model.Track;
 import com.jbielak.wordsguide.model.lyrics.LyricsResponse;
 import com.jbielak.wordsguide.network.MusixmatchApiUtils;
 import com.jbielak.wordsguide.network.MusixmatchService;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,9 +41,6 @@ public class TrackActivity extends AppCompatActivity {
 
     @BindView(R.id.tv_lyrics)
     TextView mLyrics;
-
-    @BindView(R.id.btn_add_to_favorites)
-    Button mBtnAddToFavorites;
 
     private Track mTrack;
     private MusixmatchService mService;
@@ -102,7 +95,7 @@ public class TrackActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick(R.id.btn_add_to_favorites)
+    @OnClick(R.id.fab_add_to_favorites)
     protected void addToFavorites() {
         if (mUserDisplayName != null && !mUserDisplayName.isEmpty()) {
             TrackDto track = new TrackDto(
