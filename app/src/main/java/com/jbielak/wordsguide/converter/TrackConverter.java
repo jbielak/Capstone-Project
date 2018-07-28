@@ -13,6 +13,7 @@ public abstract class TrackConverter {
         track.setAlbumName(trackDto.getAlbumName());
         track.setFirstReleaseDate(trackDto.getFirstReleaseDate());
         track.setAlbumCoverart100x100(trackDto.getAlbumCoverart100x100());
+        track.setTrackShareUrl(trackDto.getTrackShareUrl());
 
         return track;
     }

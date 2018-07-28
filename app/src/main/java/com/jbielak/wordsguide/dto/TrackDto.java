@@ -11,18 +11,20 @@ public class TrackDto implements Parcelable {
     private String albumName;
     private String firstReleaseDate;
     private String albumCoverart100x100;
+    private String trackShareUrl;
 
     public TrackDto() {
     }
 
     public TrackDto(Integer trackId, String trackName, String artistName, String albumName,
-                    String firstReleaseDate, String albumCoverart100x100) {
+                    String firstReleaseDate, String albumCoverart100x100, String trackShareUrl) {
         this.trackId = trackId;
         this.trackName = trackName;
         this.artistName = artistName;
         this.albumName = albumName;
         this.firstReleaseDate = firstReleaseDate;
         this.albumCoverart100x100 = albumCoverart100x100;
+        this.trackShareUrl = trackShareUrl;
     }
 
     protected TrackDto(Parcel in) {
@@ -32,6 +34,7 @@ public class TrackDto implements Parcelable {
         this.albumName = in.readString();
         this.firstReleaseDate = in.readString();
         this.albumCoverart100x100 = in.readString();
+        this.trackShareUrl = in.readString();
     }
 
     public static final Creator<TrackDto> CREATOR = new Creator<TrackDto>() {
@@ -94,6 +97,14 @@ public class TrackDto implements Parcelable {
         this.albumCoverart100x100 = albumCoverart100x100;
     }
 
+    public String getTrackShareUrl() {
+        return trackShareUrl;
+    }
+
+    public void setTrackShareUrl(String trackShareUrl) {
+        this.trackShareUrl = trackShareUrl;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -107,6 +118,6 @@ public class TrackDto implements Parcelable {
         parcel.writeString(albumName);
         parcel.writeString(firstReleaseDate);
         parcel.writeString(albumCoverart100x100);
-
+        parcel.writeString(trackShareUrl);
     }
 }
