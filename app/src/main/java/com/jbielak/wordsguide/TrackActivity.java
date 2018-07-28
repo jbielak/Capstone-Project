@@ -1,9 +1,13 @@
 package com.jbielak.wordsguide;
 
+import android.net.Uri;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ShareCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +46,9 @@ public class TrackActivity extends AppCompatActivity {
     @BindView(R.id.tv_lyrics)
     TextView mLyrics;
 
+    @BindView(R.id.fab_share)
+    FloatingActionButton mFabShare;
+
     private Track mTrack;
     private MusixmatchService mService;
 
@@ -73,14 +80,31 @@ public class TrackActivity extends AppCompatActivity {
 
             mTitle.setText(mTrack.getTrackName());
             mArtist.setText(mTrack.getArtistName());
+            String firstReleaseDate = mTrack.getFirstReleaseDate();
+            if (firstReleaseDate != null && firstReleaseDate.length() >= 4) {
+                firstReleaseDate = firstReleaseDate.substring(0, 4);
+            } else {
+                firstReleaseDate = "";
+            }
             mAlbum.setText(String.format("%s, %s",
-                    mTrack.getAlbumName(),
-                    mTrack.getFirstReleaseDate().substring(0, 4)));
+                    mTrack.getAlbumName(), firstReleaseDate));
 
             if (mTrack.getTrackId() != null) {
                 getLyrics(String.valueOf(mTrack.getTrackId()));
             }
         }
+
+        mFabShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mUserDisplayName != null && !mUserDisplayName.isEmpty()) {
+                    String trackToShare = mTrack.getTrackShareUrl();
+                    if (trackToShare!= null && !trackToShare.isEmpty()) {
+                        shareTrack(trackToShare);
+                    }
+                }
+            }
+        });
 
     }
 
@@ -104,7 +128,8 @@ public class TrackActivity extends AppCompatActivity {
                     mTrack.getArtistName(),
                     mTrack.getAlbumName(),
                     mTrack.getFirstReleaseDate(),
-                    mTrack.getAlbumCoverart100x100());
+                    mTrack.getAlbumCoverart100x100(),
+                    mTrack.getTrackShareUrl());
             mTracksDatabaseReference.child(String.valueOf(track.getTrackId())).setValue(track);
             Toast.makeText(getApplicationContext(), getString(R.string.message_track_added_to_favorites),
                     Toast.LENGTH_SHORT).show();
@@ -134,5 +159,16 @@ public class TrackActivity extends AppCompatActivity {
                         Log.d(TAG, "Error loading from API: " + t.getMessage());
                     }
                 });
+    }
+
+    private void shareTrack(String trackUri) {
+        String mimeType = "text/plain";
+        String title = getResources().getString(R.string.share_track);
+
+        ShareCompat.IntentBuilder.from(this)
+                .setChooserTitle(title)
+                .setType(mimeType)
+                .setText(trackUri)
+                .startChooser();
     }
 }
