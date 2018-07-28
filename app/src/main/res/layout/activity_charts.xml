@@ -22,21 +22,21 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/btn_select_country"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/charts_info_margin"
-            android:contentDescription="@string/btn_select_country"
-            android:text="@string/btn_select_country"
-            app:layout_constraintTop_toBottomOf="@id/tv_charts_info" />
-
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_top_tracks"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_select_country" />
+            app:layout_constraintTop_toBottomOf="@id/tv_charts_info" />
     </LinearLayout>
 
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_select_country"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/btn_select_country"
+        android:src="@drawable/ic_search_black_24dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>

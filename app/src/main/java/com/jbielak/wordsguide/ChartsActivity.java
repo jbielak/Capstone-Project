@@ -225,7 +225,7 @@ public class ChartsActivity extends AppCompatActivity {
                 });
     }
 
-    @OnClick(R.id.btn_select_country)
+    @OnClick(R.id.fab_select_country)
     protected void selectCountry () {
         CountryPicker countryPicker =
                 new CountryPicker.Builder().with(getApplicationContext())
